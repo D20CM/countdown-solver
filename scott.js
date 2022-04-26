@@ -1,14 +1,14 @@
 import dictionaryObject from "./dictionaryObject.js";
 
-const letter1 = "a";
-const letter2 = "b";
-const letter3 = "a";
-const letter4 = "n";
-const letter5 = "d";
-const letter6 = "o";
-const letter7 = "o";
-const letter8 = "o";
-const letter9 = "z";
+const letter1 = "t";
+const letter2 = "d";
+const letter3 = "n";
+const letter4 = "p";
+const letter5 = "e";
+const letter6 = "u";
+const letter7 = "a";
+const letter8 = "i";
+const letter9 = "r";
 
 const letters = [
   letter1,
@@ -78,22 +78,6 @@ if (results.length === 0) {
   results = words.filter((word) => word.length === 4 && wordscore(word) === 4);
 }
 
-//this is not gonna work - need a way to re-organise letters, or check out of order
-// if (results.length === 0) {
-//   results = words.filter(
-//     (word) =>
-//       word.length === 8 &&
-//       word.includes(letter1) &&
-//       word.includes(letter2) &&
-//       word.includes(letter3) &&
-//       word.includes(letter4) &&
-//       word.includes(letter5) &&
-//       word.includes(letter6) &&
-//       word.includes(letter7) &&
-//       word.includes(letter8)
-//   );
-// }
-
 console.log(results);
 
 function wordscore(word) {
@@ -107,11 +91,32 @@ function wordscore(word) {
         repeatedLettersObj[repeatedLetter]
       ) {
         //score if all repeats are used - how best to count only partial uses of repeats?
+
         score += repeatedLettersObj[repeatedLetter];
+      } else if (
+        //this will handle up to 4 repeats of a particular letter
+        word.split(repeatedLetter).length - 1 ===
+          repeatedLettersObj[repeatedLetter] - 1 &&
+        repeatedLettersObj[repeatedLetter] > 0
+      ) {
+        score += repeatedLettersObj[repeatedLetter] - 1;
+      } else if (
+        word.split(repeatedLetter).length - 1 ===
+          repeatedLettersObj[repeatedLetter] - 2 &&
+        repeatedLettersObj[repeatedLetter] > 0
+      ) {
+        score += repeatedLettersObj[repeatedLetter] - 2;
+      } else if (
+        word.split(repeatedLetter).length - 1 ===
+          repeatedLettersObj[repeatedLetter] - 3 &&
+        repeatedLettersObj[repeatedLetter] > 0
+      ) {
+        score += repeatedLettersObj[repeatedLetter] - 3;
       }
     }
   }
 
+  //the second condition in the lines below will skip scoring of (repeated) letters that have already been scored above
   if (word.includes(letter1) && !repeatedLetters.includes(letter1)) {
     score++;
   }
