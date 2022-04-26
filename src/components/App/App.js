@@ -14,6 +14,8 @@ function App() {
   const [letter7, setLetter7] = useState("");
   const [letter8, setLetter8] = useState("");
   const [letter9, setLetter9] = useState("");
+  const [results, setResults] = useState([]);
+  const [displayResults, setDisplayResults] = useState(false);
 
   const letters = [
     letter1,
@@ -174,6 +176,22 @@ function App() {
 
       return score;
     }
+    setResults(results);
+    setDisplayResults(true);
+  }
+
+  function resetGame() {
+    setLetter1("");
+    setLetter2("");
+    setLetter3("");
+    setLetter4("");
+    setLetter5("");
+    setLetter6("");
+    setLetter7("");
+    setLetter8("");
+    setLetter9("");
+    setDisplayResults(false);
+    setResults([]);
   }
 
   return (
@@ -210,6 +228,17 @@ function App() {
           buttonText="Get the best words!"
           onClick={() => startChecking()}
         ></Button>
+        {displayResults && (
+          <>
+            <h4>Your best words are...</h4>
+            <div className="resultsArea">
+              {results.map((word, index) => {
+                return <div key={index}>{word}</div>;
+              })}
+            </div>
+          </>
+        )}
+        <Button buttonText="RESET" onClick={() => resetGame()}></Button>
       </section>
     </div>
   );

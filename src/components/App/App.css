@@ -26,3 +26,15 @@ height: 100vh;
   padding: 2em;
   color: white;
 }
+
+.resultsArea{
+  /* background-color: pink; */
+  font-size: 18px;
+  font-weight: 600;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1em;
+  margin: 1em;
+  text-transform: uppercase;
+}
