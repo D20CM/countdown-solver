@@ -32,9 +32,21 @@ height: 100vh;
   font-size: 18px;
   font-weight: 600;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  max-width: 50%;
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 1em;
-  margin: 1em;
+  margin: 1em auto;
   text-transform: uppercase;
+}
+
+.resultWord{
+  background-color: rgba(40, 44, 52, 0.8);
+  width: auto;
+  max-width: 600px;
+  /* margin: auto; */
+  padding: 1em;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
 }

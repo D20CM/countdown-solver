@@ -233,7 +233,11 @@ function App() {
             <h4>Your best words are...</h4>
             <div className="resultsArea">
               {results.map((word, index) => {
-                return <div key={index}>{word}</div>;
+                return (
+                  <div key={index} className="resultWord">
+                    {word + " (" + word.length + ")"}
+                  </div>
+                );
               })}
             </div>
           </>
