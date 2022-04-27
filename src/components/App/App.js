@@ -198,10 +198,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* <h1>Countdown</h1> */}
-        <img
+        {/* <img
           src="https://upload.wikimedia.org/wikipedia/en/1/1d/Countdown_titles_2012.png"
           alt="Countdown clock and title on a blue background"
-        ></img>
+        ></img> */}
       </header>
       <section className="gameArea">
         <InputArea
