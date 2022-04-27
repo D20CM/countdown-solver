@@ -180,6 +180,19 @@ function App() {
     setDisplayResults(true);
   }
 
+  async function setDefinition(word) {
+    const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.REACT_APP_API_KEY}`;
+    const response = await fetch(url);
+    const wordInfo = await response.json();
+    const definition = wordInfo[0].shortdef;
+    // console.log(definition);
+    return definition;
+  }
+
+  // results.map(async (word) => {
+  //   // console.log(setDefinition(word));
+  // });
+
   function resetGame() {
     setLetter1("");
     setLetter2("");
@@ -233,9 +246,13 @@ function App() {
             <h4>Your best words are...</h4>
             <div className="resultsArea">
               {results.map((word, index) => {
+                const wordDefinition = setDefinition(word);
+                console.log(wordDefinition);
                 return (
                   <div key={index} className="resultWord">
                     {word + " (" + word.length + ")"}
+                    {/* {wordDefinition ? wordDefinition : null} */}
+                    {console.log(wordDefinition)}
                   </div>
                 );
               })}
