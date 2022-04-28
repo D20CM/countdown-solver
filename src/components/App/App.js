@@ -1,7 +1,7 @@
 import InputArea from "../InputArea/InputArea.js";
 import "./App.css";
 import Button from "../Button/Button.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dictionaryObject from "../../data/dictionaryObject.js";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
   const [letter8, setLetter8] = useState("");
   const [letter9, setLetter9] = useState("");
   const [results, setResults] = useState([]);
+  const [definitions, setDefinitions] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
 
   const letters = [
@@ -180,18 +181,27 @@ function App() {
     setDisplayResults(true);
   }
 
-  async function setDefinition(word) {
-    const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.REACT_APP_API_KEY}`;
-    const response = await fetch(url);
-    const wordInfo = await response.json();
-    const definition = wordInfo[0].shortdef;
-    // console.log(definition);
-    return definition;
-  }
+  // async function setDefinitions(results) {
+  //   results.forEach(async (result) => {
+  //     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${result}?key=${process.env.REACT_APP_API_KEY}`;
+  //     const response = await fetch(url);
+  //     const wordInfo = await response.json();
+  //     const definition = wordInfo[0].shortdef;
+  //     console.log(definition);
+  //     return definition;
+  //   });
+  // }
 
-  // results.map(async (word) => {
-  //   // console.log(setDefinition(word));
-  // });
+  useEffect(() => {
+    results.forEach(async (result) => {
+      const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${result}?key=${process.env.REACT_APP_API_KEY}`;
+      const response = await fetch(url);
+      const wordInfo = await response.json();
+      const definition = wordInfo[0].shortdef;
+      console.log(definition);
+      setDefinitions(...definitions, definition);
+    });
+  }, [displayResults, results, definitions]);
 
   function resetGame() {
     setLetter1("");
@@ -246,13 +256,10 @@ function App() {
             <h4>Your best words are...</h4>
             <div className="resultsArea">
               {results.map((word, index) => {
-                const wordDefinition = setDefinition(word);
-                console.log(wordDefinition);
+                console.log(definitions);
                 return (
-                  <div key={index} className="resultWord">
+                  <div key={index} className="resultWord" tooltip={definitions}>
                     {word + " (" + word.length + ")"}
-                    {/* {wordDefinition ? wordDefinition : null} */}
-                    {console.log(wordDefinition)}
                   </div>
                 );
               })}
