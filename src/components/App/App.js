@@ -15,7 +15,12 @@ function App() {
   const [letter8, setLetter8] = useState("");
   const [letter9, setLetter9] = useState("");
   const [results, setResults] = useState([]);
-  const [definitions, setDefinitions] = useState([]);
+  const [definitions, setDefinitions] = useState([
+    "testing",
+    "if",
+    "this",
+    "persists",
+  ]);
   const [displayResults, setDisplayResults] = useState(false);
 
   const letters = [
@@ -73,42 +78,62 @@ function App() {
     (word) => word.length < 10
   );
 
+  async function checkDefinition(word) {
+    console.log("Looking up definition of: " + word);
+    const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.REACT_APP_API_KEY}`;
+    const response = await fetch(url);
+    const wordInfo = await response.json();
+    const definition = wordInfo[0].shortdef;
+    console.log("Definition of '" + word + "' is: " + definition);
+
+    if (!definition) {
+      return false;
+    } else {
+      setDefinitions([...definitions, definition]);
+      return true;
+    }
+  }
+
   function startChecking() {
+    // let results = words.filter((word) => checkDefinition(word) !== false);
+
     let results = words.filter(
       (word) => word.length === 9 && wordscore(word) === 9
     );
+
+    results = results.filter(async (word) => await checkDefinition(word));
+    console.log("here we are:  " + definitions);
+    console.log("qwertyuiopasdfghjkzxcvbnm,");
 
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 8 && wordscore(word) === 8
       );
     }
-
+    results = results.filter((word) => checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 7 && wordscore(word) === 7
       );
     }
-
+    results = results.filter((word) => checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 6 && wordscore(word) === 6
       );
     }
-
+    results = results.filter((word) => checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 5 && wordscore(word) === 5
       );
     }
-
+    results = results.filter((word) => checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 4 && wordscore(word) === 4
       );
     }
-
-    console.log(results);
 
     function wordscore(word) {
       let score = 0;
@@ -192,16 +217,20 @@ function App() {
   //   });
   // }
 
-  useEffect(() => {
-    results.forEach(async (result) => {
-      const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${result}?key=${process.env.REACT_APP_API_KEY}`;
-      const response = await fetch(url);
-      const wordInfo = await response.json();
-      const definition = wordInfo[0].shortdef;
-      console.log(definition);
-      setDefinitions(...definitions, definition);
-    });
-  }, [displayResults, results, definitions]);
+  // useEffect(() => {
+  //   console.log("Results are: " + results);
+  //   results.forEach(async (result, index) => {
+  //     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${result}?key=${process.env.REACT_APP_API_KEY}`;
+  //     const response = await fetch(url);
+  //     const wordInfo = await response.json();
+  //     console.log(wordInfo);
+  //     const definition = `${result}: ` + wordInfo[0].shortdef;
+  //     setDefinitions([...definitions, definition]);
+  //     // console.log(definitions);
+  //   });
+  // }, [displayResults, results]);
+
+  // console.log(definitions);
 
   function resetGame() {
     setLetter1("");
@@ -256,7 +285,7 @@ function App() {
             <h4>Your best words are...</h4>
             <div className="resultsArea">
               {results.map((word, index) => {
-                console.log(definitions);
+                console.log(word);
                 return (
                   <div key={index} className="resultWord" tooltip={definitions}>
                     {word + " (" + word.length + ")"}
@@ -267,6 +296,7 @@ function App() {
           </>
         )}
         <Button buttonText="RESET" onClick={() => resetGame()}></Button>
+        <p>{[...definitions]}</p>
       </section>
     </div>
   );
