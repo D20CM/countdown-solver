@@ -74,9 +74,7 @@ function App() {
   }
 
   //limit words to 9 letters or less
-  const words = Object.keys(dictionaryObject).filter(
-    (word) => word.length < 10
-  );
+  let words = Object.keys(dictionaryObject).filter((word) => word.length < 10);
 
   async function checkDefinition(word) {
     console.log("Looking up definition of: " + word);
@@ -86,22 +84,34 @@ function App() {
     const definition = wordInfo[0].shortdef;
     console.log("Definition of '" + word + "' is: " + definition);
 
-    if (!definition) {
+    if (definition === undefined) {
+      console.log("falsie log");
       return false;
     } else {
-      setDefinitions([...definitions, definition]);
+      setDefinitions((definitions) => [...definitions, definition]);
       return true;
     }
   }
 
-  function startChecking() {
-    // let results = words.filter((word) => checkDefinition(word) !== false);
+  async function filterWordsByPresenceOfDefinition(words) {
+    //combine map and filter to achieve async filtering - https://advancedweb.hu/how-to-use-async-functions-with-array-filter-in-javascript/ (Tamas Sallai)
+    //create an array of true/false from checkDefinition (actually promises) myUnresolvedPromises = words.map(checkDefinition)
+    //Promise all to await resolutions wordsThatHaveDefinitions = await Promise.all(words.map(checkDefinition))
+    //filter the words array by index of checked words filteredWords = words.filter((word, index) => wordsThatHaveDefinitions[index])
 
+    let wordsThatHaveDefinitions = await Promise.all(
+      words.map((word) => checkDefinition(word))
+    );
+    console.log("Words that have definitions: ", wordsThatHaveDefinitions);
+  }
+
+  async function startChecking() {
     let results = words.filter(
       (word) => word.length === 9 && wordscore(word) === 9
     );
 
-    results = results.filter(async (word) => await checkDefinition(word));
+    filterWordsByPresenceOfDefinition(results);
+
     console.log("here we are:  " + definitions);
     console.log("qwertyuiopasdfghjkzxcvbnm,");
 
@@ -110,25 +120,25 @@ function App() {
         (word) => word.length === 8 && wordscore(word) === 8
       );
     }
-    results = results.filter((word) => checkDefinition(word));
+    // results = results.filter(async (word) => await checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 7 && wordscore(word) === 7
       );
     }
-    results = results.filter((word) => checkDefinition(word));
+    // results = results.filter(async (word) => await checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 6 && wordscore(word) === 6
       );
     }
-    results = results.filter((word) => checkDefinition(word));
+    // results = results.filter(async (word) => await checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 5 && wordscore(word) === 5
       );
     }
-    results = results.filter((word) => checkDefinition(word));
+    // results = results.filter(async (word) => await checkDefinition(word));
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 4 && wordscore(word) === 4
