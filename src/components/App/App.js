@@ -1,7 +1,7 @@
 import InputArea from "../InputArea/InputArea.js";
 import "./App.css";
 import Button from "../Button/Button.js";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import dictionaryObject from "../../data/dictionaryObject.js";
 
 function App() {
