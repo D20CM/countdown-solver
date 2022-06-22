@@ -15,7 +15,7 @@ function App() {
   const [letter8, setLetter8] = useState("");
   const [letter9, setLetter9] = useState("");
   const [results, setResults] = useState([]);
-  const [definitions, setDefinitions] = useState([]);
+  const [definitions, setDefinitions] = useState({});
   const [displayResults, setDisplayResults] = useState(false);
 
   const letters = [
@@ -61,14 +61,17 @@ function App() {
     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.REACT_APP_API_KEY}`;
     const response = await fetch(url);
     const wordInfo = await response.json();
-    const definition = { word: word, def: wordInfo[0].shortdef };
-    console.log("Definition of '" + word + "' is: " + definition.def);
+    const definition = wordInfo[0].shortdef;
+    console.log("Definition of '" + word + "' is: " + definition);
 
-    if (definition.def === undefined) {
+    if (definition === undefined) {
       console.log("falsie log");
       return false;
     } else {
-      setDefinitions((definitions) => [...definitions, definition]);
+      console.log("New definitions are: ", definitions);
+      setDefinitions((definitions) => {
+        return { ...definitions, [word]: definition };
+      });
       console.log("truthie log");
       console.log(definitions);
       return true;
@@ -289,9 +292,7 @@ function App() {
                   <div
                     key={index}
                     className="resultWord"
-                    tooltip={
-                      definitions[index].word + ": " + definitions[index].def
-                    }
+                    tooltip={word + ": " + definitions[word]}
                   >
                     {word + " (" + word.length + ")"}
                   </div>
@@ -301,11 +302,7 @@ function App() {
           </>
         )}
         <Button buttonText="RESET" onClick={() => resetGame()}></Button>
-        <div>
-          {definitions.map((def) => (
-            <p>{def.word + ": " + def.def}</p>
-          ))}
-        </div>
+        {/* <div>{...definitions}</div> */}
       </section>
     </div>
   );
