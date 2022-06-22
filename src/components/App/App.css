@@ -48,5 +48,26 @@ height: 100vh;
   padding: 1em;
   border-radius: 8px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-
+  position: relative;
 }
+
+.resultWord:hover:after{
+  content: attr(tooltip);
+  position: absolute;
+  top: 5em;
+  left: 5em;
+  width: 15em;
+  
+  background: #ECE9E6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #fff6e3, #e8d9ca);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #fff6e3, #e8d9ca); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+  z-index: 200;
+  padding: 2em;
+  font-size: small;
+  color:black;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+  border-radius: 5px;
+}
+
