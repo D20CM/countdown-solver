@@ -54,10 +54,10 @@ height: 100vh;
 .resultWord:hover:after{
   content: attr(tooltip);
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 5em;
+  left: 5em;
   width: 15em;
-  height: 10em;
+  
   background: #ECE9E6;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #fff6e3, #e8d9ca);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #fff6e3, #e8d9ca); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -66,7 +66,7 @@ height: 100vh;
   padding: 2em;
   font-size: small;
   color:black;
-  text-transform: none;
+  text-transform: uppercase;
   white-space: pre-wrap;
   border-radius: 5px;
 }

@@ -292,7 +292,7 @@ function App() {
                   <div
                     key={index}
                     className="resultWord"
-                    tooltip={word + ": " + definitions[word]}
+                    tooltip={`${word}: ${definitions[word]}`}
                   >
                     {word + " (" + word.length + ")"}
                   </div>
