@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+ 
 }
 
 .App-header {
@@ -21,7 +22,7 @@
 background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-height: 100vh;
+min-height: 100vh;
   margin: 0;
   padding: 2em;
   color: white;
@@ -32,7 +33,7 @@ height: 100vh;
   font-size: 18px;
   font-weight: 600;
   display: grid;
-  max-width: 50%;
+  max-width: 60%;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   gap: 1em;
@@ -71,3 +72,16 @@ height: 100vh;
   border-radius: 5px;
 }
 
+
+@media only screen and (max-width: 750px) {
+  .gameArea{
+    padding: 1em;
+  }
+
+  .resultsArea{
+   font-size: 16px;
+   max-width: 90%;
+   grid-template-columns: 1fr 1fr;
+   
+  }
+ }

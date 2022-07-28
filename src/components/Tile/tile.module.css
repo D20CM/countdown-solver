@@ -13,3 +13,34 @@
 
 }
 
+@media only screen and (max-width: 1000px) {
+   .tile{
+    font-size: 22px;
+   }
+  }
+
+  
+@media only screen and (max-width: 750px) {
+    .tile{
+     font-size: 24px;
+     height: 2.5em;
+     width: 2.5em;
+    }
+   }
+
+
+@media only screen and (max-width: 600px) {
+    .tile{
+     font-size: 20px;
+     height: 2em;
+     width: 2em;
+    }
+   }
+   
+@media only screen and (max-width: 450px) {
+    .tile{
+     font-size: 18px;
+     height: 1.6em;
+     width: 1.6em;
+    }
+   }
