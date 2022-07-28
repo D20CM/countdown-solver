@@ -40,7 +40,7 @@ function InputArea({
   const letterNineRef = useRef();
 
   // const [tileRefs, setTileRefs] = useState([...Array(9)]);
-  const [tileRefs, setTileRefs] = useState([
+  const [tileRefs] = useState([
     letterOneRef,
     letterTwoRef,
     letterThreeRef,
