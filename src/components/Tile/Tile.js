@@ -1,18 +1,16 @@
-import { React, useRef, forwardRef, createRef, useEffect } from "react";
+import { React } from "react";
 import css from "./tile.module.css";
 
-function Tile({
-  letter,
-  setLetter,
-  index,
-  tileRefs,
-  setTileRefs,
-  autotab,
-  innerRef,
-}) {
+function Tile({ letter, setLetter, index, autotab, innerRef }) {
   function handleChange(e) {
     setLetter(e.target.value);
     autotab(e);
+  }
+
+  function handleKeyUp(e) {
+    if (e.key === "Backspace") {
+      autotab(e);
+    }
   }
 
   return (
@@ -25,6 +23,7 @@ function Tile({
       ref={innerRef}
       value={letter}
       index={index}
+      onKeyUp={(e) => handleKeyUp(e)}
     ></input>
   );
 }

@@ -1,4 +1,4 @@
-import { React, useRef, useState, createRef, useEffect } from "react";
+import { React, useRef, useState } from "react";
 import Tile from "../Tile/Tile.js";
 import css from "./InputArea.module.css";
 
@@ -52,23 +52,20 @@ function InputArea({
     letterNineRef,
   ]);
 
-  console.log(tileRefs.length);
-
   function autotab(e) {
-    console.log("autotab called");
+    //get index of tile that calls this function
     let tabIndex = e.target.getAttribute("index");
     tabIndex = Number(tabIndex);
-
-    console.log(tabIndex);
-    // console.log(tileRefs);
-    // let tile = null;
-    // tile = tabIndex < tileRefs.length - 1 && tileRefs[tabIndex + 1];
-    let tile = tileRefs[tabIndex + 1];
-    console.log(tileRefs);
-    console.log(tile);
+    //tile is the variable that we will use to focus
+    let tile = null;
+    //conditionals check for first or last tile
+    if (e.key && e.key === "Backspace") {
+      tile = tabIndex > 0 && tileRefs[tabIndex - 1];
+    } else {
+      tile = tabIndex < tileRefs.length - 1 && tileRefs[tabIndex + 1];
+    }
     if (tile) {
       tile.current.focus();
-      // console.log(tile);
     }
   }
 
@@ -79,9 +76,6 @@ function InputArea({
         <Tile
           letter={letter1}
           setLetter={setLetter1}
-          tileNumber={1}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={0}
           autotab={autotab}
           innerRef={letterOneRef}
@@ -90,10 +84,7 @@ function InputArea({
         <Tile
           letter={letter2}
           setLetter={setLetter2}
-          tileNumber={2}
           className={"letter2"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={1}
           autotab={autotab}
           innerRef={letterTwoRef}
@@ -102,10 +93,7 @@ function InputArea({
         <Tile
           letter={letter3}
           setLetter={setLetter3}
-          tileNumber={3}
           className={"letter3"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={2}
           autotab={autotab}
           innerRef={letterThreeRef}
@@ -114,10 +102,7 @@ function InputArea({
         <Tile
           letter={letter4}
           setLetter={setLetter4}
-          tileNumber={4}
           className={"letter4"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={3}
           autotab={autotab}
           innerRef={letterFourRef}
@@ -126,10 +111,7 @@ function InputArea({
         <Tile
           letter={letter5}
           setLetter={setLetter5}
-          tileNumber={5}
           className={"letter5"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={4}
           autotab={autotab}
           innerRef={letterFiveRef}
@@ -138,10 +120,7 @@ function InputArea({
         <Tile
           letter={letter6}
           setLetter={setLetter6}
-          tileNumber={6}
           className={"letter6"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={5}
           autotab={autotab}
           innerRef={letterSixRef}
@@ -150,10 +129,7 @@ function InputArea({
         <Tile
           letter={letter7}
           setLetter={setLetter7}
-          tileNumber={7}
           className={"letter7"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={6}
           autotab={autotab}
           innerRef={letterSevenRef}
@@ -162,10 +138,7 @@ function InputArea({
         <Tile
           letter={letter8}
           setLetter={setLetter8}
-          tileNumber={8}
           className={"letter8"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={7}
           autotab={autotab}
           innerRef={letterEightRef}
@@ -174,10 +147,7 @@ function InputArea({
         <Tile
           letter={letter9}
           setLetter={setLetter9}
-          tileNumber={9}
           className={"letter9"}
-          tileRefs={tileRefs}
-          setTileRefs={setTileRefs}
           index={8}
           autotab={autotab}
           innerRef={letterNineRef}
