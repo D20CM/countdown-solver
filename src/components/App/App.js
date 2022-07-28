@@ -98,6 +98,19 @@ function App() {
   async function startChecking() {
     //clear previous definitions
     setDefinitions([]);
+    if (
+      letter1 === "" ||
+      letter2 === "" ||
+      letter3 === "" ||
+      letter4 === "" ||
+      letter5 === "" ||
+      letter6 === "" ||
+      letter7 === "" ||
+      letter8 === "" ||
+      letter9 === ""
+    ) {
+      return null;
+    }
 
     let results = words.filter(
       (word) => word.length === 9 && wordscore(word) === 9
@@ -281,6 +294,7 @@ function App() {
         <Button
           buttonText="Get the best words!"
           onClick={() => startChecking()}
+          className="gobutton"
         ></Button>
         {displayResults && (
           <>
