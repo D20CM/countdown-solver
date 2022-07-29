@@ -316,7 +316,17 @@ function App() {
           </>
         )}
         <Button buttonText="RESET" onClick={() => resetGame()}></Button>
-        {/* <div>{...definitions}</div> */}
+        <div>
+          {letter1}
+          {letter2}
+          {letter3}
+          {letter4}
+          {letter5}
+          {letter6}
+          {letter7}
+          {letter8}
+          {letter9}
+        </div>
       </section>
     </div>
   );
