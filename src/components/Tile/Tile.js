@@ -15,6 +15,8 @@ function Tile({ letter, setLetter, index, autotab, innerRef }) {
 
   return (
     <input
+      type="text"
+      autoComplete="off"
       className={css.tile}
       maxLength={1}
       onChange={(e) => {
