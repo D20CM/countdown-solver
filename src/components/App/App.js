@@ -30,6 +30,8 @@ function App() {
     letter9,
   ];
 
+  console.log(letters);
+
   function checkRepeats(letters) {
     let repeatedLetters = [];
     for (let i = 0; i < letters.length; i++) {
@@ -55,6 +57,7 @@ function App() {
 
   //limit words to 9 letters or less
   let words = Object.keys(dictionaryObject).filter((word) => word.length < 10);
+  console.log("first few words:  ", words.slice(0, 10));
 
   async function checkDefinition(word) {
     console.log("Looking up definition of: " + word);
