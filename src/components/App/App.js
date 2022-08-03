@@ -101,6 +101,21 @@ function App() {
   async function startChecking() {
     //clear previous definitions
     setDefinitions([]);
+
+    //mobile debugging
+    console.log(
+      "In startChecking: ",
+      letter1,
+      letter2,
+      letter3,
+      letter4,
+      letter5,
+      letter6,
+      letter7,
+      letter8,
+      letter9
+    );
+
     if (
       letter1 === "" ||
       letter2 === "" ||

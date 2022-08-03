@@ -3,7 +3,9 @@ import css from "./tile.module.css";
 
 function Tile({ letter, setLetter, index, autotab, innerRef }) {
   function handleChange(e) {
+    console.log("In Tile handle change: ", e.target.value);
     setLetter(e.target.value);
+
     autotab(e);
   }
 
