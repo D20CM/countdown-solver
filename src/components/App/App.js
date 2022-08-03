@@ -102,20 +102,6 @@ function App() {
     //clear previous definitions
     setDefinitions([]);
 
-    //mobile debugging
-    console.log(
-      "In startChecking: ",
-      letter1,
-      letter2,
-      letter3,
-      letter4,
-      letter5,
-      letter6,
-      letter7,
-      letter8,
-      letter9
-    );
-
     if (
       letter1 === "" ||
       letter2 === "" ||
@@ -135,6 +121,7 @@ function App() {
     );
 
     results = await filterWordsByPresenceOfDefinition(results);
+    console.log("nine-letter filtered by definition results: ", results);
 
     if (results.length === 0) {
       results = words.filter(
