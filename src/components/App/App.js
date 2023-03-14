@@ -191,36 +191,47 @@ function App() {
       }
 
       //the second condition in the lines below will skip scoring of (repeated) letters that have already been scored above
-      if (word.includes(letter1) && !repeatedLetters.includes(letter1)) {
-        score++;
+
+      for (let i = 0; i < letters.length; i++) {
+        if (
+          word.includes(letters[i]) &&
+          !repeatedLetters.includes(letters[i])
+        ) {
+          score++;
+        }
       }
-      if (word.includes(letter2) && !repeatedLetters.includes(letter2)) {
-        score++;
-      }
-      if (word.includes(letter3) && !repeatedLetters.includes(letter3)) {
-        score++;
-      }
-      if (word.includes(letter4) && !repeatedLetters.includes(letter4)) {
-        score++;
-      }
-      if (word.includes(letter5) && !repeatedLetters.includes(letter5)) {
-        score++;
-      }
-      if (word.includes(letter6) && !repeatedLetters.includes(letter6)) {
-        score++;
-      }
-      if (word.includes(letter7) && !repeatedLetters.includes(letter7)) {
-        score++;
-      }
-      if (word.includes(letter8) && !repeatedLetters.includes(letter8)) {
-        score++;
-      }
-      if (word.includes(letter9) && !repeatedLetters.includes(letter9)) {
-        score++;
-      }
+
+      // if (word.includes(letter1) && !repeatedLetters.includes(letter1)) {
+      //   score++;
+      // }
+      // if (word.includes(letter2) && !repeatedLetters.includes(letter2)) {
+      //   score++;
+      // }
+      // if (word.includes(letter3) && !repeatedLetters.includes(letter3)) {
+      //   score++;
+      // }
+      // if (word.includes(letter4) && !repeatedLetters.includes(letter4)) {
+      //   score++;
+      // }
+      // if (word.includes(letter5) && !repeatedLetters.includes(letter5)) {
+      //   score++;
+      // }
+      // if (word.includes(letter6) && !repeatedLetters.includes(letter6)) {
+      //   score++;
+      // }
+      // if (word.includes(letter7) && !repeatedLetters.includes(letter7)) {
+      //   score++;
+      // }
+      // if (word.includes(letter8) && !repeatedLetters.includes(letter8)) {
+      //   score++;
+      // }
+      // if (word.includes(letter9) && !repeatedLetters.includes(letter9)) {
+      //   score++;
+      // }
 
       return score;
     }
+
     setResults(results);
     setDisplayResults(true);
   }
