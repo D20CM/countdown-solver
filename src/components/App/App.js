@@ -121,36 +121,15 @@ function App() {
     results = await filterWordsByPresenceOfDefinition(results);
     console.log("nine-letter filtered by definition results: ", results);
 
-    //...if no nine letter words are present then progressively check for smaller words
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 8 && wordscore(word) === 8
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 7 && wordscore(word) === 7
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 6 && wordscore(word) === 6
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 5 && wordscore(word) === 5
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 4 && wordscore(word) === 4
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
+    //...if no valid nine letter words are present then progressively check for smaller valid words
+
+    for (let i = 8; i > 0; i--) {
+      if (results.length === 0) {
+        results = words.filter(
+          (word) => word.length === i && wordscore(word) === i
+        );
+        results = await filterWordsByPresenceOfDefinition(results);
+      }
     }
 
     //score the words taking into account repeated letters
