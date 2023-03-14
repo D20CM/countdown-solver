@@ -56,7 +56,7 @@ function App() {
     }
   }
 
-  //limit words to 9 letters or less
+  //remove all words longer than 9 letters as they are irrelevant
   let words = Object.keys(dictionaryObject).filter((word) => word.length < 10);
 
   //api call
@@ -112,7 +112,7 @@ function App() {
       return null;
     }
 
-    //remove all words longer than 9 letters as they are irrelevant
+    //starting with 9 letter words...
     let results = words.filter(
       (word) => word.length === 9 && wordscore(word) === 9
     );
@@ -121,7 +121,7 @@ function App() {
     results = await filterWordsByPresenceOfDefinition(results);
     console.log("nine-letter filtered by definition results: ", results);
 
-    //starting with 9 letter words, if none are present then progressively check for smaller words
+    //...if no nine letter words are present then progressively check for smaller words
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 8 && wordscore(word) === 8
