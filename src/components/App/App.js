@@ -57,7 +57,6 @@ function App() {
 
   //limit words to 9 letters or less
   let words = Object.keys(dictionaryObject).filter((word) => word.length < 10);
-  console.log("first few words:  ", words.slice(0, 10));
 
   async function checkDefinition(word) {
     console.log("Looking up definition of: " + word);
@@ -91,6 +90,7 @@ function App() {
       words.map((word) => checkDefinition(word))
     );
     console.log("Words that have definitions: ", wordsThatHaveDefinitions);
+
     const definedWords = words.filter(
       (word, index) => wordsThatHaveDefinitions[index]
     );
@@ -102,17 +102,8 @@ function App() {
     //clear previous definitions
     setDefinitions([]);
 
-    if (
-      letter1 === "" ||
-      letter2 === "" ||
-      letter3 === "" ||
-      letter4 === "" ||
-      letter5 === "" ||
-      letter6 === "" ||
-      letter7 === "" ||
-      letter8 === "" ||
-      letter9 === ""
-    ) {
+    if (letters.some((letter) => letter === "")) {
+      console.log("one or more letters is empty");
       return null;
     }
 
