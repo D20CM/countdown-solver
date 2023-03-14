@@ -32,6 +32,7 @@ function App() {
 
   console.log(letters);
 
+  //create an array of any letters that are repeated
   function checkRepeats(letters) {
     let repeatedLetters = [];
     for (let i = 0; i < letters.length; i++) {
@@ -39,12 +40,12 @@ function App() {
         repeatedLetters.push(letters[i]);
       }
     }
-
     return repeatedLetters;
   }
 
   const repeatedLetters = checkRepeats(letters);
 
+  //create an object of repeated letters (key) and how many times they occur (value)
   let repeatedLettersObj = {};
   for (let i = 0; i < repeatedLetters.length; i++) {
     if (repeatedLettersObj.hasOwnProperty(repeatedLetters[i])) {
@@ -58,6 +59,7 @@ function App() {
   //limit words to 9 letters or less
   let words = Object.keys(dictionaryObject).filter((word) => word.length < 10);
 
+  //api call
   async function checkDefinition(word) {
     console.log("Looking up definition of: " + word);
     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.REACT_APP_API_KEY}`;
@@ -79,6 +81,8 @@ function App() {
       return true;
     }
   }
+
+  //filter out any words that are not defined by the Mirriam-Webster dictionary
 
   async function filterWordsByPresenceOfDefinition(words) {
     //combine map and filter to achieve async filtering - https://advancedweb.hu/how-to-use-async-functions-with-array-filter-in-javascript/ (Tamas Sallai)
@@ -102,18 +106,22 @@ function App() {
     //clear previous definitions
     setDefinitions([]);
 
+    //check that all 9 tiles have a letter in them
     if (letters.some((letter) => letter === "")) {
       console.log("one or more letters is empty");
       return null;
     }
 
+    //remove all words longer than 9 letters as they are irrelevant
     let results = words.filter(
       (word) => word.length === 9 && wordscore(word) === 9
     );
 
+    //call function to check for definitions and filter out any words without a definition
     results = await filterWordsByPresenceOfDefinition(results);
     console.log("nine-letter filtered by definition results: ", results);
 
+    //starting with 9 letter words, if none are present then progressively check for smaller words
     if (results.length === 0) {
       results = words.filter(
         (word) => word.length === 8 && wordscore(word) === 8
@@ -145,6 +153,7 @@ function App() {
       results = await filterWordsByPresenceOfDefinition(results);
     }
 
+    //score the words taking into account repeated letters
     function wordscore(word) {
       let score = 0;
 
@@ -199,6 +208,7 @@ function App() {
     setDisplayResults(true);
   }
 
+  //reset
   function resetGame() {
     setLetter1("");
     setLetter2("");
