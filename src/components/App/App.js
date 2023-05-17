@@ -32,6 +32,7 @@ function App() {
 
   console.log(letters);
 
+  //create an array of any letters that are repeated
   function checkRepeats(letters) {
     let repeatedLetters = [];
     for (let i = 0; i < letters.length; i++) {
@@ -39,12 +40,12 @@ function App() {
         repeatedLetters.push(letters[i]);
       }
     }
-
     return repeatedLetters;
   }
 
   const repeatedLetters = checkRepeats(letters);
 
+  //create an object of repeated letters (key) and how many times they occur (value)
   let repeatedLettersObj = {};
   for (let i = 0; i < repeatedLetters.length; i++) {
     if (repeatedLettersObj.hasOwnProperty(repeatedLetters[i])) {
@@ -55,10 +56,10 @@ function App() {
     }
   }
 
-  //limit words to 9 letters or less
+  //remove all words longer than 9 letters as they are irrelevant
   let words = Object.keys(dictionaryObject).filter((word) => word.length < 10);
-  console.log("first few words:  ", words.slice(0, 10));
 
+  //api call
   async function checkDefinition(word) {
     console.log("Looking up definition of: " + word);
     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.REACT_APP_API_KEY}`;
@@ -81,6 +82,8 @@ function App() {
     }
   }
 
+  //filter out any words that are not defined by the Mirriam-Webster dictionary
+
   async function filterWordsByPresenceOfDefinition(words) {
     //combine map and filter to achieve async filtering - https://advancedweb.hu/how-to-use-async-functions-with-array-filter-in-javascript/ (Tamas Sallai)
     //create an array of true/false from checkDefinition (actually promises) myUnresolvedPromises = words.map(checkDefinition)
@@ -91,6 +94,7 @@ function App() {
       words.map((word) => checkDefinition(word))
     );
     console.log("Words that have definitions: ", wordsThatHaveDefinitions);
+
     const definedWords = words.filter(
       (word, index) => wordsThatHaveDefinitions[index]
     );
@@ -102,58 +106,34 @@ function App() {
     //clear previous definitions
     setDefinitions([]);
 
-    if (
-      letter1 === "" ||
-      letter2 === "" ||
-      letter3 === "" ||
-      letter4 === "" ||
-      letter5 === "" ||
-      letter6 === "" ||
-      letter7 === "" ||
-      letter8 === "" ||
-      letter9 === ""
-    ) {
+    //check that all 9 tiles have a letter in them
+    //todo - make this check that only letters are allowed (regex)
+    if (letters.some((letter) => letter === "")) {
+      console.log("one or more letters is empty");
       return null;
     }
 
+    //starting with 9 letter words...
     let results = words.filter(
       (word) => word.length === 9 && wordscore(word) === 9
     );
 
+    //call function to check for definitions and filter out any words without a definition
     results = await filterWordsByPresenceOfDefinition(results);
     console.log("nine-letter filtered by definition results: ", results);
 
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 8 && wordscore(word) === 8
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 7 && wordscore(word) === 7
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 6 && wordscore(word) === 6
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 5 && wordscore(word) === 5
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
-    }
-    if (results.length === 0) {
-      results = words.filter(
-        (word) => word.length === 4 && wordscore(word) === 4
-      );
-      results = await filterWordsByPresenceOfDefinition(results);
+    //...if no valid nine letter words are present then progressively check for smaller valid words
+
+    for (let i = 8; i > 0; i--) {
+      if (results.length === 0) {
+        results = words.filter(
+          (word) => word.length === i && wordscore(word) === i
+        );
+        results = await filterWordsByPresenceOfDefinition(results);
+      }
     }
 
+    //score the words taking into account repeated letters
     function wordscore(word) {
       let score = 0;
 
@@ -191,66 +171,24 @@ function App() {
       }
 
       //the second condition in the lines below will skip scoring of (repeated) letters that have already been scored above
-      if (word.includes(letter1) && !repeatedLetters.includes(letter1)) {
-        score++;
-      }
-      if (word.includes(letter2) && !repeatedLetters.includes(letter2)) {
-        score++;
-      }
-      if (word.includes(letter3) && !repeatedLetters.includes(letter3)) {
-        score++;
-      }
-      if (word.includes(letter4) && !repeatedLetters.includes(letter4)) {
-        score++;
-      }
-      if (word.includes(letter5) && !repeatedLetters.includes(letter5)) {
-        score++;
-      }
-      if (word.includes(letter6) && !repeatedLetters.includes(letter6)) {
-        score++;
-      }
-      if (word.includes(letter7) && !repeatedLetters.includes(letter7)) {
-        score++;
-      }
-      if (word.includes(letter8) && !repeatedLetters.includes(letter8)) {
-        score++;
-      }
-      if (word.includes(letter9) && !repeatedLetters.includes(letter9)) {
-        score++;
+      //skip scoring of letters already scored as repeated letters, otherwise score a letter
+      for (let i = 0; i < letters.length; i++) {
+        if (
+          word.includes(letters[i]) &&
+          !repeatedLetters.includes(letters[i])
+        ) {
+          score++;
+        }
       }
 
       return score;
     }
+
     setResults(results);
     setDisplayResults(true);
   }
 
-  // async function setDefinitions(results) {
-  //   results.forEach(async (result) => {
-  //     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${result}?key=${process.env.REACT_APP_API_KEY}`;
-  //     const response = await fetch(url);
-  //     const wordInfo = await response.json();
-  //     const definition = wordInfo[0].shortdef;
-  //     console.log(definition);
-  //     return definition;
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   console.log("Results are: " + results);
-  //   results.forEach(async (result, index) => {
-  //     const url = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${result}?key=${process.env.REACT_APP_API_KEY}`;
-  //     const response = await fetch(url);
-  //     const wordInfo = await response.json();
-  //     console.log(wordInfo);
-  //     const definition = `${result}: ` + wordInfo[0].shortdef;
-  //     setDefinitions([...definitions, definition]);
-  //     // console.log(definitions);
-  //   });
-  // }, [displayResults, results]);
-
-  // console.log(definitions);
-
+  //reset
   function resetGame() {
     setLetter1("");
     setLetter2("");
