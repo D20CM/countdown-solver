@@ -107,6 +107,7 @@ function App() {
     setDefinitions([]);
 
     //check that all 9 tiles have a letter in them
+    //todo - make this check that only letters are allowed (regex)
     if (letters.some((letter) => letter === "")) {
       console.log("one or more letters is empty");
       return null;
