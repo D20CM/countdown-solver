@@ -1,6 +1,21 @@
 .App {
   text-align: center;
- 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: #00b4db; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #0083b0,
+    #00b4db
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #0083b0,
+    #00b4db
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  min-height: 100vh;
 }
 
 .App-header {
@@ -17,18 +32,13 @@
   padding: 2em;
 }
 
-.gameArea{
-  background: #00B4DB;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-min-height: 100vh;
+.gameArea {
   margin: 0;
   padding: 2em;
   color: white;
 }
 
-.resultsArea{
+.resultsArea {
   /* background-color: pink; */
   font-size: 18px;
   font-weight: 600;
@@ -41,47 +51,71 @@ min-height: 100vh;
   text-transform: uppercase;
 }
 
-.resultWord{
+.resultWord {
   background-color: rgba(40, 44, 52, 0.8);
   width: auto;
   max-width: 600px;
   /* margin: auto; */
   padding: 1em;
   border-radius: 8px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   position: relative;
 }
 
-.resultWord:hover:after{
+.resultWord:hover:after {
   content: attr(tooltip);
   position: absolute;
   top: 5em;
   left: 5em;
   width: 15em;
-  
-  background: #ECE9E6;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #fff6e3, #e8d9ca);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #fff6e3, #e8d9ca); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+
+  background: #ece9e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #fff6e3,
+    #e8d9ca
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #fff6e3,
+    #e8d9ca
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   z-index: 200;
   padding: 2em;
   font-size: small;
-  color:black;
+  color: black;
   text-transform: uppercase;
   white-space: pre-wrap;
   border-radius: 5px;
 }
 
+#logo-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  font-size: 10px;
+  color: white;
+  margin: 1em;
+}
+.MWlogo {
+  height: 5em;
+}
 
 @media only screen and (max-width: 750px) {
-  .gameArea{
+  .gameArea {
     padding: 1em;
   }
 
-  .resultsArea{
-   font-size: 16px;
-   max-width: 90%;
-   grid-template-columns: 1fr 1fr;
-   
+  .resultsArea {
+    font-size: 16px;
+    max-width: 90%;
+    grid-template-columns: 1fr 1fr;
   }
- }
+
+  #logo-container {
+    font-size: 8px;
+  }
+}

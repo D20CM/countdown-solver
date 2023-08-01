@@ -3,6 +3,7 @@ import "./App.css";
 import Button from "../Button/Button.js";
 import { useState } from "react";
 import dictionaryObject from "../../data/dictionaryObject.js";
+import MWlogo from "../../MWLogo_DarkBG_120x120_2x.png";
 
 function App() {
   const [letter1, setLetter1] = useState("");
@@ -108,8 +109,16 @@ function App() {
 
     //check that all 9 tiles have a letter in them
     //todo - make this check that only letters are allowed (regex)
-    if (letters.some((letter) => letter === "")) {
-      console.log("one or more letters is empty");
+    if (
+      letters.some((letter) => letter === "") ||
+      letters.some((letter) => letter === " ")
+    ) {
+      console.log(
+        "One or more letters is empty.  Please input 9 letters to find the best words."
+      );
+      alert(
+        "One or more letters is empty.  Please input 9 letters to find the best words."
+      );
       return null;
     }
 
@@ -131,6 +140,7 @@ function App() {
         );
         results = await filterWordsByPresenceOfDefinition(results);
       }
+      console.log(results);
     }
 
     //score the words taking into account repeated letters
@@ -271,6 +281,12 @@ function App() {
           {letter9}
         </div>
       </section>
+      <div id="logo-container">
+        <span>
+          Definitions provided by Merriam-Webster's Collegiate® Dictionary
+        </span>
+        <img src={MWlogo} alt="Mirriam Webster logo" className="MWlogo"></img>
+      </div>
     </div>
   );
 }
